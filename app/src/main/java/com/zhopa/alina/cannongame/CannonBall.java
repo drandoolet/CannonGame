@@ -4,13 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class CannonBall extends GameElement {
-    private float velocityX;
+    private float velocityX, velocityY;
     private boolean onScreen;
 
     public CannonBall(CannonView view, int color, int soundID, int x, int y, int radius,
                float velocityX, float velocityY) {
         super(view, color, soundID, x, y, radius *2, radius *2, velocityY);
         this.velocityX = velocityX;
+        this.velocityY = velocityY;
         onScreen = true;
     }
 
@@ -30,20 +31,21 @@ public class CannonBall extends GameElement {
         velocityX *= -1;
     }
 
+    public void reverseVelocityY() { velocityY *= -1; }
+
     @Override
     public void update(double interval) {
         super.update(interval);
         shape.offset((int) (velocityX * interval), 0);
 
-        if (shape.top < 0 || shape.bottom > view.getScreenHeight()
-                || shape.left < 0 || shape.right > view.getScreenWidth())
+        if (shape.left < 0 || shape.right > view.getScreenWidth())
             onScreen = false;
+        //if (shape.top < 0 || shape.bottom > view.getScreenHeight())
+        //    velocityY *= -1;
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle(shape.left + getRadius(), shape.top + getRadius(), getRadius(), paint);
     }
-
-
 }

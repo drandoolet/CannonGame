@@ -6,7 +6,7 @@ import android.graphics.Rect;
 
 public class GameElement {
     protected CannonView view;
-    protected Paint paint;
+    protected Paint paint = new Paint();
     protected Rect shape;
     private float velocityY;
     private int soundID;
